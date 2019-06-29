@@ -12,7 +12,7 @@
 
 ## Deploy on Heroku
 > when merge into master will be done automatically deploy
-- see on the (https://app-properties.herokuapp.com/)[https://app-properties.herokuapp.com/]
+- see on the (http://app-properties.herokuapp.com)[http://app-properties.herokuapp.com]
 
 ## More information
 - Javascript language and main dependences: Es6, React, Mobx
