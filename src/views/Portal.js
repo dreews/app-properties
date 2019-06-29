@@ -1,17 +1,36 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
+import { Flex, Button, Box } from 'rebass';
+import context from '../stores/context';
 
 class Portal extends Component {
-  render () {
+  static contextType = context;
+
+  render() {
+    const { history, match } = this.props;
+
     return (
-      <div>
-        Portal {this.props.match.params.portal}
-        <div>
-          <Link to={`/portal/${this.props.match.params.portal}/1`}>{this.props.match.params.portal} 1</Link>
-        </div>
-      </div>
+      <>
+        <Flex p={2} justifyContent="center">
+          <Button
+            bg="black"
+            onClick={() => {
+              history.push('/');
+            }}
+          >
+            Voltar
+          </Button>
+        </Flex>
+        <Box p={2}>
+          Portal {match.params.portal}
+          <Box p={2}>
+            <Link to={`/portal/${match.params.portal}/1`}>{match.params.portal} 1</Link>
+          </Box>
+        </Box>
+      </>
     )
   }
 }
 
-export default Portal;
+export default observer(Portal);

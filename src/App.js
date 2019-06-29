@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { Box, Flex, Heading } from 'rebass';
 import Context from './stores/context';
 import Home from './views/Home';
 import Portal from './views/Portal';
@@ -9,32 +10,22 @@ import Property from './views/Property';
 class App extends Component {
   static contextType = Context;
 
-  componentDidMount() {
-    const { appStore } = this.context;
-    setTimeout(() => {
-      appStore.setTitle(' test mobx');
-      appStore.doRequestProperties();
-    }, 2000);
-  }
-
   render() {
-    const { appStore } = this.context;
-
     return (
       <div className="App">
-        Grupo Zap
-        {appStore.title}
+        <Flex
+          justifyContent="center"
+        >
+          <Box p={2}>
+            <Heading color="black" textAlign="center">
+              Teste de engenharia do GrupoZap
+            </Heading>
 
-        <div>
-          <Link to="/portal/vivareal">vivareal</Link>
-        </div>
-        <div>
-          <Link to="/portal/zap">zap</Link>
-        </div>
-
-        <Route exact path="/" component={Home} />
-        <Route exact path="/portal/:portal" component={Portal} />
-        <Route exact path="/portal/:portal/:id" component={Property} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/portal/:portal" component={Portal} />
+            <Route exact path="/portal/:portal/:id" component={Property} />
+          </Box>
+        </Flex>
       </div>
     );
   }
