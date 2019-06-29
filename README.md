@@ -18,4 +18,4 @@
 - Javascript language and main dependences: Es6, React, Mobx
 - Node version: 10.15.0
 - Eslint: airbnb config
-- Bootstrap to start fast: [Create React App](https://github.com/facebook/create-react-app).
+- Bootstrap to fast start: [Create React App](https://github.com/facebook/create-react-app).
