@@ -1,7 +1,5 @@
 FROM node:10.15.0-alpine
 
-RUN mkdir /app
-
 WORKDIR /app
 
 COPY . .
