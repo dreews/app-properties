@@ -1,8 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const theme = {};
+const blue = '#1190cd';
+const lightgray = '#e4e4e2';
 
 export const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap');
+
   * {
     margin: 0;
     padding: 0;
@@ -16,14 +19,36 @@ export const GlobalStyle = createGlobalStyle`
             user-select: none;
   }
 
-  html, body {
+  html, body, #root, .App {
     min-height: 100vh;
   }
 
   body {
-    font-family: 'Verdana';
+    font-family: 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     moz-osx-font-smothing: grayscale;
     text-rendering: optimizeLegibility;
+    background-color: ${lightgray};
   }
 `;
+
+export const theme = {
+  fontSizes: [
+    12, 14, 16, 24, 32, 48, 64,
+  ],
+  colors: {
+    blue,
+    lightgray,
+  },
+  buttons: {
+    primary: {
+      color: '#fff',
+      backgroundColor: blue,
+    },
+    outline: {
+      color: blue,
+      backgroundColor: 'transparent',
+      boxShadow: 'inset 0 0 2px',
+    },
+  },
+};
