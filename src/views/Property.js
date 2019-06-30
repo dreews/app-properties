@@ -6,22 +6,35 @@ import context from '../stores/context';
 class Property extends Component {
   static contextType = context;
 
+  componentWillMount() {
+    const { appStore } = this.context;
+    const { match } = this.props;
+
+    if (!appStore.getCurrentProperties.length) {
+      appStore.setPortal(match.params.portal);
+      appStore.setPropertyIdSelected(match.params.id);
+      appStore.doRequestProperties();
+    }
+  }
+
   render() {
-    const { history, match } = this.props;
+    const { appStore } = this.context;
+    const { history } = this.props;
+
     return (
       <>
         <Flex p={2} justifyContent="center">
           <Button
             bg="black"
             onClick={() => {
-              history.push(`/portal/${match.params.portal}`);
+              history.push(`/portal/${appStore.getPortal}`);
             }}
           >
             Voltar
           </Button>
         </Flex>
         <Box p={2}>
-          Property {match.params.id} {match.params.portal}
+          {JSON.stringify(appStore.getPropertySelected, null, ' ')}
         </Box>
       </>
     )
