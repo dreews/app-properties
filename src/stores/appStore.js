@@ -26,29 +26,53 @@ class AppStore {
     item && item.pricingInfos
   );
 
+  isLocation = address => (
+    address
+    && address.geoLocation
+    && address.geoLocation.location
+  );
+
   isLatLog = (item) => {
-    if (
-      !item.address
-      && !item.address.geoLocation
-      && !item.address.geoLocation.location
-    ) {
+    if (!this.isLocation(item.address)) {
       return false;
     }
-
-    return (
-      item.address.geoLocation.location.lon !== 0
-      && item.address.geoLocation.location.lat !== 0
-    );
+    const { location } = item.address.geoLocation;
+    return location.lon !== 0 && location.lat !== 0;
   };
 
   isValidToFilter = item => (
     this.isPricingInfos(item) && this.isLatLog(item)
   );
 
+  isBoundingBox = (item) => {
+    const zapGroupGeo = {
+      lat: { min: -23.568704, max: -23.546686 },
+      lon: { min: -46.693419, max: -46.641146 },
+    };
+    const { location } = item.address.geoLocation;
+    const latBetween = (
+      location.lat <= zapGroupGeo.lat.max
+      && location.lat >= zapGroupGeo.lat.min
+    );
+    const lonBetween = (
+      location.lon <= zapGroupGeo.lon.max
+      && location.lon >= zapGroupGeo.lon.min
+    );
+    return latBetween && lonBetween;
+  }
+
+  zapSaleVerifyBoundingBox = (minNumber, item) => {
+    if (this.isBoundingBox(item)) {
+      const lowerPercentage = (minNumber * 0.10);
+      return minNumber - lowerPercentage;
+    }
+    return minNumber;
+  }
+
   zapSaleValidUsableAreasPrice = (item) => {
     const hasUsableAreas = item.usableAreas && item.usableAreas > 0;
     const usableAreasPrice = hasUsableAreas && (item.pricingInfos.price / item.usableAreas);
-    return usableAreasPrice > 3500;
+    return usableAreasPrice > this.zapSaleVerifyBoundingBox(3500, item);
   }
 
   isValidToZap = (item) => {
@@ -139,9 +163,9 @@ class AppStore {
   }
 
   get getPropertySelected() {
-    return this.getCurrentProperties.filter((item) => {
-      return item.id === this.propertyIdSelected;
-    })
+    return this.getCurrentProperties.filter(item => (
+      item.id === this.propertyIdSelected
+    ));
   }
 }
 
