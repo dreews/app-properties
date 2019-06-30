@@ -1,10 +1,12 @@
 import {
-  observable, action, decorate, computed,
+  action, decorate,
 } from 'mobx';
 
 class PropertiesStore {
   constructor(rootStore) {
     this.rootStore = rootStore;
+    this.saleValidUsableAreasPrice = rootStore.zapStore.saleValidUsableAreasPrice;
+    this.rentValidMonthlyCondoFee = rootStore.vivarealStore.rentValidMonthlyCondoFee;
   }
 
   isRental = businessType => (
@@ -56,58 +58,31 @@ class PropertiesStore {
   }
 
   isValidToZap = (item) => {
+    const { zapStore } = this.rootStore;
+    zapStore.isBoundingBox = this.isBoundingBox;
+
     if (this.isRental(item.pricingInfos.businessType)) {
-      const validPrice = item.pricingInfos.rentalTotalPrice >= 3500;
-      return validPrice;
+      return zapStore.rentalTotalPricePermitted(item.pricingInfos.rentalTotalPrice);
     }
 
-    const validPrice = item.pricingInfos.price >= 600000;
     return (
-      validPrice && this.zapSaleValidUsableAreasPrice(item)
+      zapStore.salePricePermitted(item.pricingInfos.price)
+      && this.saleValidUsableAreasPrice(item)
     );
   };
 
-  zapSaleValidUsableAreasPrice = (item) => {
-    const hasUsableAreas = item.usableAreas && item.usableAreas > 0;
-    const usableAreasPrice = hasUsableAreas && (item.pricingInfos.price / item.usableAreas);
-    return usableAreasPrice > this.zapSaleVerifyBoundingBox(3500, item);
-  }
-
-  zapSaleVerifyBoundingBox = (minNumber, item) => {
-    if (this.isBoundingBox(item)) {
-      const lowerPercentage = (minNumber * 0.10);
-      return minNumber - lowerPercentage;
-    }
-    return minNumber;
-  }
-
   isValidToVivareal = (item) => {
+    const { vivarealStore } = this.rootStore;
+    vivarealStore.isBoundingBox = this.isBoundingBox;
+
     if (this.isRental(item.pricingInfos.businessType)) {
-      const validPrice = item.pricingInfos.rentalTotalPrice <= 4000;
       return (
-        validPrice && this.vivarealRentalValid(item)
+        vivarealStore.rentalTotalPricePermitted(item.pricingInfos.rentalTotalPrice)
+        && this.rentValidMonthlyCondoFee(item)
       );
     }
 
-    const validPrice = item.pricingInfos.price <= 700000;
-    return validPrice;
-  }
-
-  vivarealRentalValid = (item) => {
-    const calcPercentRentalTotalPrice = parseFloat(item.pricingInfos.rentalTotalPrice) * 0.3;
-    const monthlyCondoFee = parseFloat(item.pricingInfos.monthlyCondoFee);
-    return (
-      monthlyCondoFee
-      && monthlyCondoFee < this.vivaRentVerifyBoundBox(calcPercentRentalTotalPrice, item)
-    );
-  }
-
-  vivaRentVerifyBoundBox = (value, item) => {
-    if (this.isBoundingBox(item)) {
-      const higherPercentage = (value * 0.50);
-      return value + higherPercentage;
-    }
-    return value;
+    return vivarealStore.salePricePermitted(item.pricingInfos.price);
   }
 }
 
