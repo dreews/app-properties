@@ -8,21 +8,9 @@ import context from '../stores/context';
 class Home extends Component {
   static contextType = context;
 
-  componentWillMount() {
-    const { appStore } = this.context;
-
-    if (!appStore.getCurrentProperties.length) {
-      appStore.doRequestProperties();
-    }
-  }
-
   render() {
     const { history } = this.props;
     const { appStore } = this.context;
-
-    if (!appStore.getAllPropeties.length) {
-      return false;
-    }
 
     return (
       <>
