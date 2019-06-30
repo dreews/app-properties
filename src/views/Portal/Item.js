@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { Box, Card } from 'rebass';
+import { Link as BaseLink } from 'react-router-dom';
+import { observer } from 'mobx-react';
 import context from '../../stores/context';
+
+const Link = styled(BaseLink)`
+  border-radius: 3px;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  display: inline-block;
+  text-decoration: none;
+  margin-top: 10px;
+`;
 
 class Item extends Component {
   static contextType = context;
@@ -34,11 +47,15 @@ class Item extends Component {
             </>
           ) }
 
-          {item.id}
+          <Link to={(`/portal/${appStore.getPortal}/${item.id}`)} onClick={() => {
+            appStore.setPropertyIdSelected(item.id);
+          }}>
+            Ver detalhes
+          </Link>
         </Box>
       </Card>
     );
   }
 }
 
-export default Item;
+export default observer(Item);
