@@ -8,6 +8,8 @@ class Item extends Component {
   render() {
     const { appStore } = this.context;
     const { item } = this.props;
+    const { pricingInfos } = item;
+
     return (
       <Card
         fontSize={1}
@@ -18,17 +20,17 @@ class Item extends Component {
         borderRadius={8}
       >
         <Box p={2}>
-          { appStore.isRental(item.pricingInfos.businessType) && (
+          { appStore.isRental(pricingInfos.businessType) && (
             <>
               <h2>Apartamento para Aluguel</h2>
-              <p>{parseFloat(item.pricingInfos.rentalTotalPrice).toFixed(2)}</p>
+              <p>{parseFloat(pricingInfos.rentalTotalPrice).toFixed(2)}</p>
             </>
           ) }
 
-          { appStore.isSale(item.pricingInfos.businessType) && (
+          { appStore.isSale(pricingInfos.businessType) && (
             <>
               <h2>Apartamento para Venda</h2>
-              <p>{parseFloat(item.pricingInfos.price).toFixed(2)}</p>
+              <p>{parseFloat(pricingInfos.price).toFixed(2)}</p>
             </>
           ) }
 
