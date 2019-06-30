@@ -7,12 +7,12 @@ class List extends Component {
   static contextType = context;
 
   render() {
-    const { appStore } = this.context;
+    const { appStore, paginationStore } = this.context;
 
     return (
       <>
         { appStore.getCurrentProperties
-          .slice(appStore.firstItem, appStore.lastItem)
+          .slice(paginationStore.firstItem, paginationStore.lastItem)
           .map(item => <Item key={item.id} item={item} />) }
       </>
     );

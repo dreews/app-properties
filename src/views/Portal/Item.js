@@ -20,7 +20,7 @@ class Item extends Component {
   static contextType = context;
 
   render() {
-    const { appStore } = this.context;
+    const { appStore, propertiesStore } = this.context;
     const { item } = this.props;
     const { pricingInfos } = item;
 
@@ -37,14 +37,14 @@ class Item extends Component {
           <Flex>
             <Carousel images={item.images} cover={item.images[0]} />
             <Box p={2}>
-              { appStore.isRental(pricingInfos.businessType) && (
+              { propertiesStore.isRental(pricingInfos.businessType) && (
                 <>
                   <h2>Apartamento para Aluguel</h2>
                   <p>{parseFloat(pricingInfos.rentalTotalPrice).toFixed(2)}</p>
                 </>
               ) }
 
-              { appStore.isSale(pricingInfos.businessType) && (
+              { propertiesStore.isSale(pricingInfos.businessType) && (
                 <>
                   <h2>Apartamento para Venda</h2>
                   <p>{parseFloat(pricingInfos.price).toFixed(2)}</p>
@@ -52,7 +52,7 @@ class Item extends Component {
               ) }
 
               <Link
-                to={(`/portal/${appStore.getPortal}/${item.id}`)}
+                to={(`/portal/${appStore.portal}/${item.id}`)}
                 onClick={() => {
                   appStore.setPropertyIdSelected(item.id);
                 }}

@@ -21,7 +21,11 @@ class Portal extends Component {
 
   render() {
     const { history } = this.props;
-    const { appStore } = this.context;
+    const { appStore, paginationStore } = this.context;
+
+    if (!appStore.getCurrentProperties.length) {
+      return false;
+    }
 
     return (
       <>
@@ -43,11 +47,11 @@ class Portal extends Component {
           <ReactPaginate
             previousLabel="<"
             nextLabel=">"
-            pageCount={appStore.getPageCount}
+            pageCount={paginationStore.getPageCount}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
             onPageChange={(e) => {
-              appStore.setPageSelected(e.selected);
+              paginationStore.setPageSelected(e.selected);
             }}
             containerClassName="pagination"
             activeClassName="active"
