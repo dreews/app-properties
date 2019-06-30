@@ -44,10 +44,6 @@ class AppStore {
     return new Promise((resolve, reject) => api(resolve, reject));
   }
 
-  get getAllPropeties() {
-    return this.properties;
-  }
-
   get getCurrentProperties() {
     if (this.isVivareal) {
       return this.getAllVivarealProperties;
@@ -57,13 +53,13 @@ class AppStore {
   }
 
   get getAllZapProperties() {
-    return this.getAllPropeties.filter(item => (
+    return this.properties.filter(item => (
       this.isValidToFilter(item) && this.isValidToZap(item)
     ));
   }
 
   get getAllVivarealProperties() {
-    return this.getAllPropeties.filter(item => (
+    return this.properties.filter(item => (
       this.isValidToFilter(item) && this.isValidToVivareal(item)
     ));
   }
