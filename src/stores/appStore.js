@@ -88,10 +88,21 @@ class AppStore {
     );
   };
 
+  vivaRentVerifyBoundBox = (value, item) => {
+    if (this.isBoundingBox(item)) {
+      const higherPercentage = (value * 0.50);
+      return value + higherPercentage;
+    }
+    return value;
+  }
+
   vivarealRentalValid = (item) => {
     const calcPercentRentalTotalPrice = parseFloat(item.pricingInfos.rentalTotalPrice) * 0.3;
     const monthlyCondoFee = parseFloat(item.pricingInfos.monthlyCondoFee);
-    return monthlyCondoFee && monthlyCondoFee < calcPercentRentalTotalPrice;
+    return (
+      monthlyCondoFee
+      && monthlyCondoFee < this.vivaRentVerifyBoundBox(calcPercentRentalTotalPrice, item)
+    );
   }
 
   isValidToVivareal = (item) => {
