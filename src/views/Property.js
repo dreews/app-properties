@@ -33,7 +33,7 @@ class Property extends Component {
           <Button
             bg="black"
             onClick={() => {
-              history.push(`/portal/${appStore.getPortal}`);
+              history.push(`/portal/${appStore.portal}`);
             }}
           >
             Voltar

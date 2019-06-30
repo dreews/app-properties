@@ -168,12 +168,8 @@ class AppStore {
     return this.getAllZapProperties;
   }
 
-  get getPortal() {
-    return this.portal;
-  }
-
   get isVivareal() {
-    return this.getPortal === 'vivareal';
+    return this.portal === 'vivareal';
   }
 
   get getPropertySelected() {
@@ -193,7 +189,6 @@ decorate(AppStore, {
   isRental: action,
   isSale: action,
   setPropertyIdSelected: action,
-  getPortal: computed,
   getCurrentProperties: computed,
   getPropertySelected: computed,
   isVivareal: computed,
