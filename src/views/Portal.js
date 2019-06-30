@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Flex, Button, Box } from 'rebass';
+import ReactPaginate from 'react-paginate';
+import Pagination from '../components/Pagination';
 import context from '../stores/context';
 import List from './Portal/List';
 
@@ -37,8 +39,22 @@ class Portal extends Component {
           Portal {appStore.portal}
         </Box>
         <List />
+        <Pagination>
+          <ReactPaginate
+            previousLabel="<"
+            nextLabel=">"
+            pageCount={appStore.getPageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={(e) => {
+              appStore.setPageSelected(e.selected);
+            }}
+            containerClassName="pagination"
+            activeClassName="active"
+          />
+        </Pagination>
       </>
-    )
+    );
   }
 }
 
