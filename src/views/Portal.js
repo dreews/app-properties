@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 import { Flex, Button, Box } from 'rebass';
 import context from '../stores/context';
 import List from './Portal/List';
@@ -19,7 +18,7 @@ class Portal extends Component {
   }
 
   render() {
-    const { history, match } = this.props;
+    const { history } = this.props;
     const { appStore } = this.context;
 
     return (
@@ -36,9 +35,6 @@ class Portal extends Component {
         </Flex>
         <Box p={2}>
           Portal {appStore.portal}
-          <Box p={2}>
-            <Link to={`/portal/${match.params.portal}/1`}>{match.params.portal} 1</Link>
-          </Box>
         </Box>
         <List />
       </>
