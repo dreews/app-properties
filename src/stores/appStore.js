@@ -11,6 +11,7 @@ class AppStore {
     this.allPropertiesApi = AllPropertiesApi;
     this.properties = [];
     this.portal = 'vivareal';
+    this.propertyIdSelected = null;
   }
 
   isRental = businessType => (
@@ -84,6 +85,10 @@ class AppStore {
     this.properties = properties;
   }
 
+  setPropertyIdSelected(propertyId) {
+    this.propertyIdSelected = propertyId;
+  }
+
   setPortal(portal) {
     this.portal = portal;
   }
@@ -132,9 +137,16 @@ class AppStore {
   get isVivareal() {
     return this.getPortal === 'vivareal';
   }
+
+  get getPropertySelected() {
+    return this.getCurrentProperties.filter((item) => {
+      return item.id === this.propertyIdSelected;
+    })
+  }
 }
 
 decorate(AppStore, {
+  propertyIdSelected: observable,
   portal: observable,
   properties: observable,
   setPortal: action,
@@ -142,8 +154,10 @@ decorate(AppStore, {
   setProperties: action,
   isRental: action,
   isSale: action,
+  setPropertyIdSelected: action,
   getPortal: computed,
   getCurrentProperties: computed,
+  getPropertySelected: computed,
   isVivareal: computed,
 });
 
