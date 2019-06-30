@@ -14,7 +14,7 @@ class PropertiesStore {
   );
 
   isSale = businessType => (
-    !this.isRental(businessType)
+    businessType && !this.isRental(businessType)
   );
 
   isPricingInfos = item => (
@@ -32,7 +32,10 @@ class PropertiesStore {
       return false;
     }
     const { location } = item.address.geoLocation;
-    return location.lon !== 0 && location.lat !== 0;
+    return (
+      location.lon && location.lon !== 0
+      && location.lat && location.lat !== 0
+    );
   };
 
   isValidToFilter = item => (
