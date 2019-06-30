@@ -49,15 +49,16 @@ class AppStore {
       lat: { min: -23.568704, max: -23.546686 },
       lon: { min: -46.693419, max: -46.641146 },
     };
-    const { location } = item.address.geoLocation;
+    const geoLocation = item.address.geoLocation.location;
     const latBetween = (
-      location.lat <= zapGroupGeo.lat.max
-      && location.lat >= zapGroupGeo.lat.min
+      geoLocation.lat <= zapGroupGeo.lat.max
+      && geoLocation.lat >= zapGroupGeo.lat.min
     );
     const lonBetween = (
-      location.lon <= zapGroupGeo.lon.max
-      && location.lon >= zapGroupGeo.lon.min
+      geoLocation.lon <= zapGroupGeo.lon.max
+      && geoLocation.lon >= zapGroupGeo.lon.min
     );
+
     return latBetween && lonBetween;
   }
 
