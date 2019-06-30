@@ -12,6 +12,10 @@ class AppStore {
     this.properties = [];
     this.portal = 'vivareal';
     this.propertyIdSelected = null;
+    this.itemsPerPage = 20;
+    this.lastItem = 20;
+    this.pageSelected = 0;
+    this.firstItem = 0;
   }
 
   isRental = businessType => (
@@ -179,9 +183,32 @@ class AppStore {
       item.id === this.propertyIdSelected
     ));
   }
+
+  get getPageCount() {
+    const total = this.getCurrentProperties.length;
+    return (total / this.itemsPerPage);
+  }
+
+  get calcFirstItem() {
+    return (this.pageSelected * this.itemsPerPage);
+  }
+
+  get calcLastItem() {
+    return (this.firstItem + this.itemsPerPage);
+  }
+
+  setPageSelected(pageSelected) {
+    this.pageSelected = pageSelected;
+    this.firstItem = this.calcFirstItem;
+    this.lastItem = this.calcLastItem;
+  }
 }
 
 decorate(AppStore, {
+  firstItem: observable,
+  lastItem: observable,
+  pageSelected: observable,
+  itemsPerPage: observable,
   propertyIdSelected: observable,
   portal: observable,
   properties: observable,
@@ -191,10 +218,14 @@ decorate(AppStore, {
   isRental: action,
   isSale: action,
   setPropertyIdSelected: action,
+  setPageSelected: action,
   getPortal: computed,
   getCurrentProperties: computed,
   getPropertySelected: computed,
   isVivareal: computed,
+  getPageCount: computed,
+  calcFirstItem: computed,
+  calcLastItem: computed,
 });
 
 export default AppStore;
