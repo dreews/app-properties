@@ -5,6 +5,7 @@ import {
 class ZapStore {
   constructor(rootStore) {
     this.rootStore = rootStore;
+    this.isBoundingBox = () => null;
   }
 
   saleValidUsableAreasPrice = (item) => {
@@ -24,6 +25,10 @@ class ZapStore {
   rentalTotalPricePermitted = price => price >= 3500;
 
   salePricePermitted = price => price >= 600000;
+
+  setBoundingBox = (f) => {
+    this.isBoundingBox = f;
+  }
 }
 
 decorate(ZapStore, {
@@ -31,6 +36,7 @@ decorate(ZapStore, {
   rentalTotalPrice: action,
   rentalTotalPricePermitted: action,
   salePricePermitted: action,
+  setBoundingBox: action,
 });
 
 export default ZapStore;

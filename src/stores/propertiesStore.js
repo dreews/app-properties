@@ -59,7 +59,7 @@ class PropertiesStore {
 
   isValidToZap = (item) => {
     const { zapStore } = this.rootStore;
-    zapStore.isBoundingBox = this.isBoundingBox;
+    zapStore.setBoundingBox(this.isBoundingBox);
 
     if (this.isRental(item.pricingInfos.businessType)) {
       return zapStore.rentalTotalPricePermitted(item.pricingInfos.rentalTotalPrice);
@@ -73,7 +73,7 @@ class PropertiesStore {
 
   isValidToVivareal = (item) => {
     const { vivarealStore } = this.rootStore;
-    vivarealStore.isBoundingBox = this.isBoundingBox;
+    vivarealStore.setBoundingBox(this.isBoundingBox);
 
     if (this.isRental(item.pricingInfos.businessType)) {
       return (

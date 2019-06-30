@@ -5,6 +5,7 @@ import {
 class VivarealStore {
   constructor(rootStore) {
     this.rootStore = rootStore;
+    this.isBoundingBox = () => null;
   }
 
   rentValidMonthlyCondoFee = (item) => {
@@ -27,11 +28,16 @@ class VivarealStore {
   rentalTotalPricePermitted = price => price <= 4000;
 
   salePricePermitted = price => price <= 700000;
+
+  setBoundingBox = (f) => {
+    this.isBoundingBox = f;
+  }
 }
 
 decorate(VivarealStore, {
   rentValidMonthlyCondoFee: action,
   rentalTotalPricePermitted: action,
+  setBoundingBox: action,
 });
 
 export default VivarealStore;
