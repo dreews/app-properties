@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Box, Card } from 'rebass';
+import { Flex, Box, Card } from 'rebass';
 import { Link as BaseLink } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import context from '../../stores/context';
+import Carousel from '../../components/Carousel';
 
 const Link = styled(BaseLink)`
   border-radius: 3px;
@@ -33,25 +34,33 @@ class Item extends Component {
         borderRadius={8}
       >
         <Box p={2}>
-          { appStore.isRental(pricingInfos.businessType) && (
-            <>
-              <h2>Apartamento para Aluguel</h2>
-              <p>{parseFloat(pricingInfos.rentalTotalPrice).toFixed(2)}</p>
-            </>
-          ) }
+          <Flex>
+            <Carousel images={item.images} cover={item.images[0]} />
+            <Box p={2}>
+              { appStore.isRental(pricingInfos.businessType) && (
+                <>
+                  <h2>Apartamento para Aluguel</h2>
+                  <p>{parseFloat(pricingInfos.rentalTotalPrice).toFixed(2)}</p>
+                </>
+              ) }
 
-          { appStore.isSale(pricingInfos.businessType) && (
-            <>
-              <h2>Apartamento para Venda</h2>
-              <p>{parseFloat(pricingInfos.price).toFixed(2)}</p>
-            </>
-          ) }
+              { appStore.isSale(pricingInfos.businessType) && (
+                <>
+                  <h2>Apartamento para Venda</h2>
+                  <p>{parseFloat(pricingInfos.price).toFixed(2)}</p>
+                </>
+              ) }
 
-          <Link to={(`/portal/${appStore.getPortal}/${item.id}`)} onClick={() => {
-            appStore.setPropertyIdSelected(item.id);
-          }}>
-            Ver detalhes
-          </Link>
+              <Link
+                to={(`/portal/${appStore.getPortal}/${item.id}`)}
+                onClick={() => {
+                  appStore.setPropertyIdSelected(item.id);
+                }}
+              >
+                Ver detalhes
+              </Link>
+            </Box>
+          </Flex>
         </Box>
       </Card>
     );

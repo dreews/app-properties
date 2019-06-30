@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Flex, Button, Box } from 'rebass';
 import context from '../stores/context';
+import Carousel from '../components/Carousel';
 
 class Property extends Component {
   static contextType = context;
@@ -21,8 +22,13 @@ class Property extends Component {
     const { appStore } = this.context;
     const { history } = this.props;
 
+    if (!appStore.getPropertySelected.length) {
+      return false;
+    }
+
     return (
       <>
+
         <Flex p={2} justifyContent="center">
           <Button
             bg="black"
@@ -34,7 +40,11 @@ class Property extends Component {
           </Button>
         </Flex>
         <Box p={2}>
-          {JSON.stringify(appStore.getPropertySelected, null, ' ')}
+          <Carousel images={appStore.getPropertySelected[0].images} cover={appStore.getPropertySelected[0].images[0]} />
+
+          <pre>
+            {JSON.stringify(appStore.getPropertySelected[0], null, 2)}
+          </pre>
         </Box>
       </>
     )
