@@ -4,14 +4,16 @@ import {
   Text, Flex, Button, Box,
 } from 'rebass';
 import context from '../stores/context';
-import List from './Portal/List';
 
 class Home extends Component {
   static contextType = context;
 
   componentWillMount() {
     const { appStore } = this.context;
-    appStore.doRequestProperties();
+
+    if (!appStore.getCurrentProperties.length) {
+      appStore.doRequestProperties();
+    }
   }
 
   render() {
@@ -36,6 +38,7 @@ class Home extends Component {
             <Button
               bg="blue"
               onClick={() => {
+                appStore.setPortal('vivareal');
                 history.push('/portal/vivareal');
               }}
             >
@@ -46,6 +49,7 @@ class Home extends Component {
             <Button
               bg="gray"
               onClick={() => {
+                appStore.setPortal('zap');
                 history.push('/portal/zap');
               }}
             >
@@ -53,7 +57,6 @@ class Home extends Component {
             </Button>
           </Box>
         </Flex>
-        <List />
       </>
     );
   }

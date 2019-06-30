@@ -22,20 +22,63 @@ class AppStore {
   );
 
   isPricingInfos = item => (
-    !item && !item.pricingInfos
+    item && item.pricingInfos
   );
 
-  isValidToZap = pricingInfos => (
-    this.isRental(pricingInfos.businessType)
-      ? pricingInfos.rentalTotalPrice >= 3500
-      : pricingInfos.price >= 600000
+  isLatLog = (item) => {
+    if (
+      !item.address
+      && !item.address.geoLocation
+      && !item.address.geoLocation.location
+    ) {
+      return false;
+    }
+
+    return (
+      item.address.geoLocation.location.lon !== 0
+      && item.address.geoLocation.location.lat !== 0
+    );
+  };
+
+  isValidToFilter = item => (
+    this.isPricingInfos(item) && this.isLatLog(item)
   );
 
-  isValidToVivareal = pricingInfos => (
-    this.isRental(pricingInfos.businessType)
-      ? pricingInfos.rentalTotalPrice <= 4000
-      : pricingInfos.price <= 700000
-  );
+  zapSaleValidUsableAreasPrice = (item) => {
+    const hasUsableAreas = item.usableAreas && item.usableAreas > 0;
+    const usableAreasPrice = hasUsableAreas && (item.pricingInfos.price / item.usableAreas);
+    return usableAreasPrice > 3500;
+  }
+
+  isValidToZap = (item) => {
+    if (this.isRental(item.pricingInfos.businessType)) {
+      const validPrice = item.pricingInfos.rentalTotalPrice >= 3500;
+      return validPrice;
+    }
+
+    const validPrice = item.pricingInfos.price >= 600000;
+    return (
+      validPrice && this.zapSaleValidUsableAreasPrice(item)
+    );
+  };
+
+  vivarealRentalValid = (item) => {
+    const calcPercentRentalTotalPrice = parseFloat(item.pricingInfos.rentalTotalPrice) * 0.3;
+    const monthlyCondoFee = parseFloat(item.pricingInfos.monthlyCondoFee);
+    return monthlyCondoFee && monthlyCondoFee < calcPercentRentalTotalPrice;
+  }
+
+  isValidToVivareal = (item) => {
+    if (this.isRental(item.pricingInfos.businessType)) {
+      const validPrice = item.pricingInfos.rentalTotalPrice <= 4000;
+      return (
+        validPrice && this.vivarealRentalValid(item)
+      );
+    }
+
+    const validPrice = item.pricingInfos.price <= 700000;
+    return validPrice;
+  }
 
   setProperties(properties) {
     this.properties = properties;
@@ -59,23 +102,15 @@ class AppStore {
   }
 
   get getAllZapProperties() {
-    return this.getAllPropeties.filter((item) => {
-      if (this.isPricingInfos(item)) {
-        return false;
-      }
-
-      return this.isValidToZap(item.pricingInfos);
-    });
+    return this.getAllPropeties.filter(item => (
+      this.isValidToFilter(item) && this.isValidToZap(item)
+    ));
   }
 
   get getAllVivarealProperties() {
-    return this.getAllPropeties.filter((item) => {
-      if (this.isPricingInfos(item)) {
-        return false;
-      }
-
-      return this.isValidToVivareal(item.pricingInfos);
-    });
+    return this.getAllPropeties.filter(item => (
+      this.isValidToFilter(item) && this.isValidToVivareal(item)
+    ));
   }
 
   get getAllPropeties() {
@@ -83,19 +118,19 @@ class AppStore {
   }
 
   get getCurrentProperties() {
-    if (this.getPortal === 'zap') {
-      return this.getAllZapProperties;
-    }
-
-    if (this.getPortal === 'vivareal') {
+    if (this.isVivareal) {
       return this.getAllVivarealProperties;
     }
 
-    return this.getAllPropeties;
+    return this.getAllZapProperties;
   }
 
   get getPortal() {
     return this.portal;
+  }
+
+  get isVivareal() {
+    return this.getPortal === 'vivareal';
   }
 }
 
@@ -109,6 +144,7 @@ decorate(AppStore, {
   isSale: action,
   getPortal: computed,
   getCurrentProperties: computed,
+  isVivareal: computed,
 });
 
 export default AppStore;
