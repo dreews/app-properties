@@ -11,7 +11,7 @@ class List extends Component {
 
     return (
       <>
-        { appStore.getAllPropeties.map(item => <Item key={item.id} item={item} />) }
+        { appStore.getCurrentProperties.map(item => <Item key={item.id} item={item} />) }
       </>
     );
   }
