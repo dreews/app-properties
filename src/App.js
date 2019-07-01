@@ -29,8 +29,8 @@ class App extends Component {
                 color="#333"
                 textAlign="center"
                 fontWeight={[800, 300]}
-                fontSize={[3, 4, 5]}
-                width={[1, 1, 1, 1 / 2]}
+                fontSize={[3, 4, 4]}
+                width={[1, 1, 1 / 2]}
                 my={[3, 4, 4]}
               >
                 Teste de engenharia do GrupoZap

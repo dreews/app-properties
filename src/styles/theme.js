@@ -1,7 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 
 const blue = '#1190cd';
-const lightgray = '#e4e4e2';
+const orange = '#ff5a00';
+const lightgray = '#efefef';
+const darkgray = '#333333';
 
 export const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap');
@@ -39,11 +41,20 @@ export const theme = {
   colors: {
     blue,
     lightgray,
+    darkgray,
+    orange,
+  },
+  font: {
+    primary: 'Open Sans',
   },
   buttons: {
     primary: {
       color: '#fff',
       backgroundColor: blue,
+    },
+    secondary: {
+      color: '#fff',
+      backgroundColor: orange,
     },
     outline: {
       color: blue,
