@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Carousel, { Modal, ModalGateway } from 'react-images';
+import { Image, Box } from 'rebass';
 
 class CustomCarousel extends Component {
   state = { modalIsOpen: false }
@@ -28,7 +30,11 @@ class CustomCarousel extends Component {
 
     return (
       <>
-        <img src={cover} alt="" onClick={this.toggleModal} width="100" height="100"/>
+        <Image
+          src={cover}
+          alt="Imagem de capa do Imóvel"
+          onClick={this.toggleModal}
+        />
         <ModalGateway>
           {modalIsOpen ? (
             <Modal onClose={this.toggleModal}>
@@ -37,7 +43,7 @@ class CustomCarousel extends Component {
           ) : null}
         </ModalGateway>
       </>
-    )
+    );
   }
 }
 
