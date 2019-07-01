@@ -9,7 +9,7 @@
 - `npm install` (Install dependences)
 - `npm start` (`http://localhost:3000` to view it in the browser)
 
-# Unit Tests
+## Unit Tests
 - `npm test`
 
 ## Deploy on Heroku
