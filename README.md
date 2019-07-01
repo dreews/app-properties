@@ -1,4 +1,4 @@
-# App property
+# App properties
 > list properties of 2 portals.
 
 ## Start local
