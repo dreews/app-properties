@@ -128,29 +128,6 @@ class Property extends Component {
               </Text>
             ) }
           </Box>
-
-          <iframe
-            title="iframe"
-            width="300"
-            height="170"
-            frameBorder="0"
-            scrolling="no"
-            marginHeight="0"
-            marginWidth="0"
-            src={`https://maps.google.com/maps?q=${address.geoLocation.location.lat},${address.geoLocation.location.lon}&hl=es;z=14&amp;output=embed`}
-          />
-          <small>
-            <a
-              href={`
-                https://maps.google.com/maps?q=
-                ${address.geoLocation.location.lat},
-                ${address.geoLocation.location.lon}
-                &hl=es;z=14&amp;output=embed`}
-              style={{ color: '#0000FF', textAlign: 'left' }}
-            >
-              Ver maior
-            </a>
-          </small>
         </Box>
       </Wrapper>
     )
