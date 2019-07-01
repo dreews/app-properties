@@ -130,7 +130,7 @@ class Property extends Component {
           </Box>
         </Box>
       </Wrapper>
-    )
+    );
   }
 }
 

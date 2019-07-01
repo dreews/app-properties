@@ -35,14 +35,9 @@ class CustomCarousel extends Component {
     const { modalIsOpen } = this.state;
     const { images, cover } = this.props;
 
-    const imgs = [
-      {
-        source: images[0],
-      },
-      {
-        source: images[1],
-      },
-    ];
+    const imgs = images.map(item => ({
+      source: item,
+    }));
 
     return (
       <>
