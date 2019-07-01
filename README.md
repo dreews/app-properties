@@ -14,7 +14,7 @@
 
 ## Deploy on Heroku
 > when merge into master will be done automatically deploy
-- see on the (http://app-properties.herokuapp.com)[http://app-properties.herokuapp.com]
+- see on the [http://app-properties.herokuapp.com](http://app-properties.herokuapp.com)
 - `npm run build` if you need generate the artefact
 
 ## More information
