@@ -3,19 +3,13 @@ import { observer } from 'mobx-react';
 import {
   Flex, Button, Box, Image,
 } from 'rebass';
-import styled from 'styled-components';
 import ReactPaginate from 'react-paginate';
 import Pagination from '../components/Pagination';
 import context from '../stores/context';
 import List from './Portal/List';
 import LogoVivarealBlue from './images/logo_vivareal_blue.svg';
 import LogoZap from './images/logo_zap.png';
-
-const Wrapper = styled.div`
-@media screen and (min-width: 768px) {
-  width: 700px;
-  margin: 0 auto;
-`;
+import Wrapper from '../components/Wrapper';
 
 class Portal extends Component {
   static contextType = context;
@@ -41,7 +35,7 @@ class Portal extends Component {
     return (
       <Wrapper>
         <Flex
-          px={[2, 5]}
+          px={[2]}
           justifyContent="space-between"
           alignItems="center"
           flexWrap="wrap"
