@@ -43,7 +43,8 @@ class Home extends Component {
               }}
             >
               <Image
-                width={[1 / 2]}
+                width={['150px']}
+                height={['30px']}
                 src={LogoVivareal}
                 alt="Logo Vivareal"
               />
@@ -59,7 +60,8 @@ class Home extends Component {
               }}
             >
               <Image
-                width={[1 / 1.6]}
+                width={['70px']}
+                height={['30px']}
                 src={LogoZap}
                 alt="Logo Zap"
               />
