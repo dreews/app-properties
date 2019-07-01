@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import {
-  Flex, Button, Box, Image, Text, 
+  Flex, Button, Box, Image, Text,
 } from 'rebass';
 import context from '../stores/context';
 import Carousel from '../components/Carousel';
@@ -83,7 +83,7 @@ class Property extends Component {
         <Box p={2}>
           <Carousel images={appStore.getPropertySelected[0].images} cover={appStore.getPropertySelected[0].images[0]} />
 
-          <Box p={[2, 4]} color="darkgray">
+          <Box p={[2, 4]} color="darkgray" bg="white">
             { propertiesStore.isRental(pricingInfos.businessType) && (
               <Text fontWeight={800} fontSize={[2, 3, 5]}>Apartamento para Aluguel</Text>
             ) }
@@ -130,7 +130,7 @@ class Property extends Component {
           </Box>
         </Box>
       </Wrapper>
-    )
+    );
   }
 }
 
